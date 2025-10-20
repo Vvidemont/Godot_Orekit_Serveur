@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvwe06h5f8ket"]
+
+[ext_resource type="Script" uid="uid://b3efsuifam0re" path="res://script/info_sat/info_sat.gd" id="1_eu8qn"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchor_right = 0.227
+anchor_bottom = 0.656
+offset_right = 0.495972
+offset_bottom = -0.0880127
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eu8qn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Information"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nom :"
+
+[node name="Labelname" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Couleurs "
+
+[node name="ColorRect" type="ColorRect" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "a"
+
+[node name="Labela" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Buttonret" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Retour"

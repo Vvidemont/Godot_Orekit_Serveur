@@ -1,0 +1,238 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmoxl0mfqoln1"]
+
+[ext_resource type="Script" uid="uid://br83w8unboji8" path="res://script/formulaire_satellite/formulaire_satellite.gd" id="1_dr4yl"]
+[ext_resource type="PackedScene" uid="uid://b4wpx5v5qhb1g" path="res://scenes/satellite.tscn" id="2_tng4d"]
+
+[node name="Formulaire_Satellite" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dr4yl")
+_follower_scene = ExtResource("2_tng4d")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 251.0
+offset_bottom = 470.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Formulaire Satellite"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Définir Paramètres :"
+
+[node name="GridContainer2" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 26
+columns = 2
+
+[node name="Labelname" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+text = "Nom"
+
+[node name="LineEditsatname" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Labeldt" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+text = "dt [s]"
+
+[node name="SpinBoxdt" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 1.0
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+text = "Couleur"
+
+[node name="ColorPickerButtoncolor" type="ColorPickerButton" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+text = "Type"
+
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Classique"
+popup/item_0/id = 0
+popup/item_1/text = "Cartésien"
+popup/item_1/id = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Labelepoch" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "epoch : "
+
+[node name="LineEditepoch" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2025-09-22T00:00:00Z"
+editable = false
+
+[node name="GridContainerClassique" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 26
+columns = 2
+
+[node name="Labela" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "a [km]"
+
+[node name="SpinBoxa" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 6400.0
+max_value = 100000.0
+step = 0.001
+value = 6400.0
+
+[node name="Labele" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "e"
+
+[node name="SpinBoxe" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Labeli" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "i [°]"
+
+[node name="SpinBoxi" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+max_value = 180.0
+step = 0.01
+
+[node name="Labelraan" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "RAAN [°]"
+
+[node name="SpinBoxraan" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+max_value = 360.0
+step = 0.01
+
+[node name="Labelargp" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "argp [°]"
+
+[node name="SpinBoxargp" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+max_value = 360.0
+step = 0.01
+
+[node name="Labelta" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+text = "ta [°]"
+
+[node name="SpinBoxta" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerClassique"]
+layout_mode = 2
+max_value = 360.0
+step = 0.01
+
+[node name="GridContainerCartésien" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 26
+columns = 2
+
+[node name="LabelX" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "X [km]"
+
+[node name="SpinBoxX" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100000.0
+step = 0.001
+
+[node name="LabelY" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "Y [km]"
+
+[node name="SpinBoxY" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+max_value = 100000.0
+step = 0.001
+
+[node name="LabelZ" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "Z [km]"
+
+[node name="SpinBoxZ" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+max_value = 100000.0
+step = 0.001
+
+[node name="LabelVx" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "VX [km/s]"
+
+[node name="SpinBoxVx" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+max_value = 100000.0
+step = 0.001
+
+[node name="LabelVy" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "VY [km/s]"
+
+[node name="SpinBoxVy" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+max_value = 100000.0
+step = 0.001
+
+[node name="LabeltVz" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+text = "VZ [km/s]"
+
+[node name="SpinBoxtVz" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/GridContainerCartésien"]
+layout_mode = 2
+max_value = 100000.0
+step = 0.001
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonRes" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Résultat"
+
+[node name="ButtonAnn" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Annuler"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

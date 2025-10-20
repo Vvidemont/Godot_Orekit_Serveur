@@ -1,0 +1,83 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4p67xbsr6lgu"]
+
+[ext_resource type="Script" uid="uid://dn21b5qu5avmw" path="res://script/time_control/time_control.gd" id="1_5fluw"]
+
+[node name="TimeControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5fluw")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -69.5
+offset_right = 175.0
+offset_bottom = 69.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Temps de simulation"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Labelts" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Début de simulation"
+
+[node name="LineEditts" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2025-09-22T00:00:00Z"
+editable = false
+
+[node name="Label2te" type="Label" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Fin de simulation"
+
+[node name="LineEditte" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "2025-09-23T00:00:00Z"
+editable = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonVal" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Valider"
+
+[node name="ButtonRet" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Retour
+"

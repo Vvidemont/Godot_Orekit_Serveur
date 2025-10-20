@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4wpx5v5qhb1g"]
+
+[ext_resource type="Script" uid="uid://ca56wif0pankn" path="res://script/Satellite/satellite.gd" id="1_spm53"]
+
+[node name="Satellite" type="Node3D"]
+script = ExtResource("1_spm53")

@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://cdro8hu4n0le"]
+
+[ext_resource type="Script" uid="uid://cpeaw1nqyq8lj" path="res://script/simulation_3d/simulation_3d.gd" id="1_r5d63"]
+[ext_resource type="Script" uid="uid://sdmqnqrmoycp" path="res://script/simulation_3d/rts_controller.gd" id="2_qn3yn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qn3yn"]
+sky_top_color = Color(0.0850163, 0.0436887, 0.37812, 1)
+ground_bottom_color = Color(0.115798, 0.0567002, 0.0191541, 1)
+energy_multiplier = 0.9
+
+[sub_resource type="Sky" id="Sky_e16kb"]
+sky_material = SubResource("ProceduralSkyMaterial_qn3yn")
+
+[sub_resource type="Environment" id="Environment_qn3yn"]
+background_mode = 2
+background_energy_multiplier = 1.15
+sky = SubResource("Sky_e16kb")
+
+[sub_resource type="SphereMesh" id="SphereMesh_e16kb"]
+radius = 6.378
+height = 12.756
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qn3yn"]
+albedo_color = Color(0.223529, 0.509804, 1, 1)
+
+[node name="Simulation_3D" type="Node3D"]
+script = ExtResource("1_r5d63")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qn3yn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+omni_range = 100.0
+omni_attenuation = 0.0
+
+[node name="Terre" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_e16kb")
+surface_material_override/0 = SubResource("StandardMaterial3D_qn3yn")
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("2_qn3yn")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="OrbitsRoot" type="Node3D" parent="."]
+
+[node name="UILayerTime" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = 564.0
+offset_top = 284.0
+offset_right = 604.0
+offset_bottom = 307.0

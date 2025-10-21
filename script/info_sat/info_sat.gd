@@ -10,6 +10,10 @@ extends Control
 @onready var test : Label = $Panel/MarginContainer/VBoxContainer/HBoxContainer2/Labela
 # Label affichant une donnée orbitale (ex : demi-grand axe).
 
+@onready var labelp1 : Label = $Panel/MarginContainer/VBoxContainer/HBoxContainer2/Label
+
+var type
+
 func _ready() -> void:
 	# Initialise l’interface et connecte le bouton retour.
 	ret_button.pressed.connect(_on_retour)
@@ -26,7 +30,15 @@ func _ready() -> void:
 	var meta: Dictionary = sat.meta_input
 	if meta.has("a"):
 		test.text = str(int(meta["a"]) * 1e-3) + " km"
-		# Affiche le demi-grand axe en kilomètres (conversion m → km).
+	type = meta["type"]
+	_set_text_label()
+	
+
+func _set_text_label() :
+	if type == 0 :
+		labelp1.text = "a (km)"
+	else :
+		labelp1.text = "X (km)"
 
 func _on_retour() -> void:
 	# Réinitialise l’ID global et retourne à la liste des satellites.

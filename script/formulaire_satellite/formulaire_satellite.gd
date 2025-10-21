@@ -52,7 +52,6 @@ const ENDPOINT := "http://localhost:8080/orekit"
 # Bouton “Résultat” pour lancer le calcul.
 @onready var btn_ann: Button = $Panel/MarginContainer/VBoxContainer/HBoxContainer2/ButtonAnn
 # Bouton “Annuler” pour revenir en arrière.
-@onready var label: Label = $Panel/MarginContainer/VBoxContainer/Label2
 # Label d’affichage de texte ou d’erreurs.
 
 # Variables temporaires

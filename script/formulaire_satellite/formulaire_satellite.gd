@@ -174,7 +174,7 @@ func _on_ann() -> void:
 	ui_parent.add_child(hud)
 	queue_free()
 
-func _type_choice(index: int) -> void:
+func _type_choice(_index: int) -> void:
 	# Affiche le bon panneau selon le mode choisi.
 	match option_button.get_selected():
 		0:

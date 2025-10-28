@@ -34,11 +34,15 @@ var _next_id: int = 1
 var _by_id: Dictionary = {}
 # Dictionnaire : id → Satellite.
 
-func add_satellite(name: String, color: Color, trajectory: Array, meta_input: Dictionary = {}) -> int:
+func add_satellite(sat_name: String, color: Color, trajectory: Array,id_sat: int, meta_input: Dictionary = {}, ) -> int:
+	var id
 	# Ajoute un satellite au registre global.
-	var id := _next_id
-	_next_id += 1
-	var sat := Satellite.new(id, name, trajectory, color, meta_input)
+	if id_sat == 0:
+		id = _next_id
+		_next_id += 1
+	else:
+		id = Global.id_info
+	var sat := Satellite.new(id, sat_name, trajectory, color, meta_input)
 	_by_id[id] = sat
 	emit_signal("satellite_added", id)
 	return id

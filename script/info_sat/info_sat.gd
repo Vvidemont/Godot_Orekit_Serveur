@@ -92,5 +92,9 @@ func _on_retour() -> void:
 	queue_free()
 
 func _on_modif() -> void :
+	var ui_parent := get_parent()
+	var form_sat: PackedScene = load("res://scenes/formulaire_satellite.tscn")
+	var form := form_sat.instantiate()
+	ui_parent.add_child(form)
+	queue_free()
 	
-	return

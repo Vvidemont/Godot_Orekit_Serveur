@@ -57,14 +57,17 @@ const ENDPOINT := "http://localhost:8080/orekit"
 # Variables temporaires
 var last_body: Dictionary
 var p1; var p2; var p3; var p4; var p5; var p6; var type
+var info :Dictionary
 
 func _ready() -> void:
 	# Connexion des signaux aux fonctions correspondantes.
 	http.request_completed.connect(_on_request_completed)
 	btn_res.pressed.connect(_on_result_pressed)
 	btn_ann.pressed.connect(_on_ann)
+	_set_modif()
 	option_button.item_selected.connect(_type_choice)
-
+	
+	
 func _on_result_pressed() -> void:
 	# Selon le mode sélectionné, lit les valeurs correspondantes.
 	match option_button.get_selected():
@@ -142,7 +145,13 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	var result_data_any :Variant = data.get("result", {})
 	if not (result_data_any is Dictionary):
 		return
-		
+	
+	var id_sat = 0
+	
+	if Global.id_info != null:
+		id_sat = Global.id_info
+		SatelliteRegistry.remove_satellite(Global.id_info)
+	
 	var result_data := result_data_any as Dictionary
 	
 	# --- Récupère la trajectoire calculée ---
@@ -156,7 +165,7 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	
 	var meta_input :Dictionary = last_body["params"].duplicate(true)
 	meta_input["action"] = last_body["action"]
-	SatelliteRegistry.add_satellite(name, sat_color, arr_data, meta_input)
+	SatelliteRegistry.add_satellite(name, sat_color, arr_data,id_sat,meta_input,)
 
 	# Affiche la durée de simulation renvoyée.
 	var tv : Variant = result_data.get("time_length", {})
@@ -167,6 +176,10 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	print(n)
 
 func _on_ann() -> void:
+	
+	# Redonne une valeur nulle pour la modification d'un satellite
+	Global.id_info = null
+	
 	# Revient au formulaire de simulation (annulation).
 	var ui_parent := get_parent()
 	var hud_scene: PackedScene = load("res://scenes/formulaire_simulation.tscn")
@@ -183,3 +196,43 @@ func _type_choice(_index: int) -> void:
 		1:
 			grid_classique.hide()
 			grid_cartesien.show()
+
+func _set_modif()-> void :
+	if Global.id_info != null:
+		
+			var sat_id: int = Global.id_info
+			var sat: SatelliteRegistry.Satellite = SatelliteRegistry.get_one(sat_id)
+	
+	# Récupère les données d’entrée associées au satellite.
+			info = sat.meta_input
+			type = info["type"]
+			sat_name.text = str(sat.name)
+			color.color = sat.color
+			spin_dt.value = info["dt_seconds"]
+			
+			match type :
+				0:
+					option_button.selected = 0
+					_type_choice(type)
+					
+					spin_a.value = info["p1"]* 1e-3
+					spin_e.value = info["p2"]
+					spin_i.value = info["p3"]
+					spin_raan.value = info["p4"]
+					spin_argp.value = info["p5"]
+					spin_ta.value = info["p6"]
+					
+				1:
+					option_button.selected = 1
+					_type_choice(type)
+					
+					spin_x.value = info["p1"]* 1e-3
+					spin_y.value = info["p2"]* 1e-3
+					spin_z.value = info["p3"]* 1e-3
+					spin_vx.value = info["p4"]* 1e-3
+					spin_vy.value = info["p5"]* 1e-3
+					spin_vz.value = info["p6"]* 1e-3
+			
+			
+	else:
+		return

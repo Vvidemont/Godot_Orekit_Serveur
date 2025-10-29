@@ -139,7 +139,7 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	if name.is_empty():
 		name = "Satellite %s" % Time.get_datetime_string_from_system()
 	var chosen_color := sat_color.color
-	SatelliteRegistry.add_satellite(name, chosen_color, arr_data)
+	SatelliteRegistry.add_satellite(name, chosen_color,arr_data,0)
 	print("Satellite ajouté: ", name, " points=", arr_data.size())
 
 func _on_ann() -> void:

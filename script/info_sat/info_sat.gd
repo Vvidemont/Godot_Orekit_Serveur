@@ -47,11 +47,10 @@ func _ready() -> void:
 	_set_text_label()
 	
 
-
 func _set_text_label() :
 	# fonction qui écrit les infos du satellite
 	
-	if type == 0 :
+	if str(type) == "0" :
 		# Paramètres initiaux de type orbitaux
 		labelp1.text = "a"
 		labelp2.text = "e"
@@ -66,7 +65,8 @@ func _set_text_label() :
 		paramp4.text = str(int(meta["p4"])) + " °"
 		paramp5.text = str(int(meta["p5"])) + " °"
 		paramp6.text = str(int(meta["p6"])) + " °"
-	else :
+		
+	elif str(type) == "1":
 		# Paramètres initiaux de type cartésien
 		labelp1.text = "X"
 		labelp2.text = "Y"
@@ -81,6 +81,37 @@ func _set_text_label() :
 		paramp4.text = str((meta["p4"]) * 1e-3) + " km/s"
 		paramp5.text = str((meta["p5"]) * 1e-3) + " km/s"
 		paramp6.text = str((meta["p6"]) * 1e-3) + " km/s"
+		
+	elif str(type) == "Hohmann":
+		labelp1.text = "a init"
+		labelp2.text = "a final"
+		labelp3.text = "Début de manoeuvre"
+		labelp3.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		paramp1.text = str(int(meta["a_init"]) * 1e-3) + " km"
+		paramp2.text = str(int(meta["a_final"]) * 1e-3) + " km"
+		
+		match meta["man_method"]:
+			0:
+				labelp4.text = "Date :"
+				paramp4.text = str(meta["man_value"])
+			1:
+				labelp4.text = "Seconde écoulé :"
+				paramp4.text = str(meta["man_value"]) + " s"
+			2:
+				labelp4.text = "Orbite écoulé :"
+				paramp4.text = str(meta["man_value"])
+		
+		
+		
+		labelp5.hide()
+		labelp6.hide()
+		
+		paramp5.hide()
+		paramp6.hide()
+		
+	else :
+		return
+		
 
 func _on_retour() -> void:
 	# Réinitialise l’ID global et retourne à la liste des satellites.
@@ -93,7 +124,11 @@ func _on_retour() -> void:
 
 func _on_modif() -> void :
 	var ui_parent := get_parent()
-	var form_sat: PackedScene = load("res://scenes/formulaire_satellite.tscn")
+	var form_sat: PackedScene
+	if str(type) in ["0","1"] :
+		form_sat = load("res://scenes/formulaire_satellite.tscn")
+	elif str(type) in ["Hohmann","Inclination"]:
+		form_sat = load("res://scenes/Interface_Manoeuvre.tscn")
 	var form := form_sat.instantiate()
 	ui_parent.add_child(form)
 	queue_free()

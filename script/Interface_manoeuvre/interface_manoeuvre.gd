@@ -46,12 +46,15 @@ const ENDPOINT := "http://localhost:8080/orekit"
 
 var manvalue
 # Valeur associée à la manœuvre (date, délai, période…).
+var last_body: Dictionary
 
+var info :Dictionary
 func _ready() -> void:
 	# Connexion des signaux.
 	http.request_completed.connect(_on_request_completed)
 	btn_val.pressed.connect(_on_result_pressed)
 	btn_ret.pressed.connect(_on_ann)
+	_get_modif()
 
 func _on_result_pressed() -> void:
 	var body: Dictionary
@@ -61,6 +64,7 @@ func _on_result_pressed() -> void:
 			body = {
 			"action": "compute_hohmann",
 			"params": {
+				"type": "Hohmann",
 				"a_init": a_init.value * 1000.0,
 				"a_final": a_final.value * 1000.0,
 				"man_method": opt_button.get_selected(),
@@ -74,6 +78,7 @@ func _on_result_pressed() -> void:
 			body = {
 			"action": "compute_inclination",
 			"params": {
+				"type": "Inclination",
 				"a": spin_a.value * 1000.0,
 				"e": spin_e.value,
 				"i": spin_i.value,
@@ -89,7 +94,8 @@ func _on_result_pressed() -> void:
 				"dt": int(spin_dt.value)
 			}
 		}
-		
+	
+	last_body = body.duplicate(true)
 	var json := JSON.stringify(body)
 	var headers := PackedStringArray(["Content-Type: application/json"])
 
@@ -128,7 +134,13 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	if not (result_data_any is Dictionary):
 		push_error("Champ 'result' non-objet")
 		return
-
+	
+	var id_sat = 0
+	
+	if Global.id_info != null:
+		id_sat = Global.id_info
+		SatelliteRegistry.remove_satellite(Global.id_info)
+		
 	var result_data := result_data_any as Dictionary
 	var arr_data : Array = result_data.get("data", [])
 	if arr_data.is_empty():
@@ -139,11 +151,14 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	if name.is_empty():
 		name = "Satellite %s" % Time.get_datetime_string_from_system()
 	var chosen_color := sat_color.color
-	SatelliteRegistry.add_satellite(name, chosen_color,arr_data,0)
+	var meta_input :Dictionary = last_body["params"].duplicate(true)
+	meta_input["action"] = last_body["action"]
+	SatelliteRegistry.add_satellite(name, chosen_color,arr_data,id_sat,meta_input)
 	print("Satellite ajouté: ", name, " points=", arr_data.size())
 
 func _on_ann() -> void:
 	# Retourne au formulaire de simulation.
+	Global.id_info = null
 	var ui_parent := get_parent()
 	var hud_scene: PackedScene = load("res://scenes/formulaire_simulation.tscn")
 	var hud := hud_scene.instantiate()
@@ -164,3 +179,30 @@ func _get_node():
 			return str(true)
 		1:
 			return str(false)
+			
+func _get_modif() :
+	if Global.id_info != null:
+		var sat_id: int = Global.id_info
+		var sat: SatelliteRegistry.Satellite = SatelliteRegistry.get_one(sat_id)
+		
+		info = sat.meta_input
+		sat_name.text = str(sat.name)
+		spin_dt.value = info["dt"]
+		sat_color.color = sat.color
+		opt_button.selected = info["man_method"]
+		
+		match info["man_method"]:
+			0:
+				opt_edit.text = info["man_value"]
+			1,2:
+				opt_spin.value = info["man_value"]
+		
+		match info["type"] :
+			"Hohmann":
+				a_init.value = info["a_init"]  * 1e-3
+				a_final.value = info["a_final"] * 1e-3
+				
+			
+				
+	else :
+		return

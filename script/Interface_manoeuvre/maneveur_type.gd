@@ -4,6 +4,9 @@ extends OptionButton
 @onready var inclination_param : GridContainer = $"../../GridContainerInclination"
 @onready var panel : Panel = $"../../../../.."
 @onready var margin : MarginContainer = $"../../../.."
+
+var info :Dictionary
+
 func _ready() -> void:
 	select(0)
 
@@ -14,17 +17,30 @@ func _ready() -> void:
 	_on_item_selected(get_selected())
 
 func _on_item_selected(index: int) -> void:
-	match index:
-		0:
-			_hohman_selected()
-			_autosize_panel()
-		1:
-			inclination_selected()
-			_autosize_panel()
-		_:
+	if Global.id_info != null :
+		var sat_id: int = Global.id_info
+		var sat: SatelliteRegistry.Satellite = SatelliteRegistry.get_one(sat_id)
+		info = sat.meta_input
+		
+		match  info["type"] :
+			"Hohmann":
+				_hohman_selected()
+				_autosize_panel()
+			"Inclination":
+				inclination_selected()
+				_autosize_panel()
+	else :
+		match index:
+			0:
+				_hohman_selected()
+				_autosize_panel()
+			1:
+				inclination_selected()
+				_autosize_panel()
+			_:
 			# Sécurité
-			hohman_param.visible = false
-			inclination_param.visible = false
+				hohman_param.visible = false
+				inclination_param.visible = false
 
 func _hohman_selected() -> void :
 	hohman_param.visible = true

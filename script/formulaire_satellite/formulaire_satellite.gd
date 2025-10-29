@@ -165,7 +165,7 @@ func _on_request_completed(_result: int, response_code: int, _headers: PackedStr
 	
 	var meta_input :Dictionary = last_body["params"].duplicate(true)
 	meta_input["action"] = last_body["action"]
-	SatelliteRegistry.add_satellite(name, sat_color, arr_data,id_sat,meta_input,)
+	SatelliteRegistry.add_satellite(name, sat_color, arr_data,id_sat,meta_input)
 
 	# Affiche la durée de simulation renvoyée.
 	var tv : Variant = result_data.get("time_length", {})

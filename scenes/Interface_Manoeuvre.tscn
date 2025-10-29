@@ -142,7 +142,7 @@ text = "a final [km]"
 
 [node name="SpinBox2" type="SpinBox" parent="Panel/MarginContainer/CenterContainer/VBoxContainer/GridContainerHohmann"]
 layout_mode = 2
-max_value = 1e+06
+max_value = 1000000.0
 
 [node name="GridContainerInclination" type="GridContainer" parent="Panel/MarginContainer/CenterContainer/VBoxContainer"]
 visible = false
